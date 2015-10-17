@@ -1,7 +1,7 @@
 // #include "share/atspre_define.hats"
 #include "share/atspre_staload.hats"
 
-stadef snat = [a:int | a > 1; a < 55] int(a)
+stadef snat = [a:nat | a > 1; a < 55] int(a)
 
 extern fn addTwoNats {a:int} (x: snat, y: Nat) : Nat
 implement addTwoNats (x, y) = x + y
