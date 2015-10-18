@@ -34,7 +34,8 @@ implement main0 (argc, argv) =
         val string_to_search = g1ofg0_string(string_to_search)
         val search_char = argv[2] 
         val search_char = let val m = g1ofg0_string(search_char)
-                              val () = assert (string_length(m) = 1)
+                              val err_msg = "The second argument must be a single character.\n"
+                              val () = assert_errmsg (string_length(m) = 1, err_msg )
                           in m[0] end
                           
         val maybe_pos = string_find (string_to_search, search_char)
