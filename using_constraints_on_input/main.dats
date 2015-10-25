@@ -1,9 +1,9 @@
 // #include "share/atspre_define.hats"
 #include "share/atspre_staload.hats"
 
-typedef SNat = [a:nat | 1 < a; a < 55] int(a)
+typedef SNat(a) = [ 1 < a; a < 55] int(a)
 
-extern fn addTwoNats : (SNat, Nat) -> Nat
+extern fn addTwoNats : {i:nat}{j:nat} (SNat(i), int(j)) -> int(i + j)
 implement addTwoNats (x, y) = x + y
 
 extern fn read_nat : string -> Nat
@@ -17,7 +17,7 @@ implement read_nat s =
     nat
   end
 
-extern fn read_snat : string -> SNat
+extern fn read_snat : string -> [i:nat] SNat(i)
 implement read_snat s =
   let
     val snat    = read_nat (s)
