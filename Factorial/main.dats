@@ -1,28 +1,49 @@
-#include "share/atspre_staload.hats"
+#include "share/atspre_define.hats"
 
-extern fn factorial: {n : nat} int(n) -> int
-implement factorial n =
-  let
-    fun loop {n:nat}{l:addr} .<n>. (pf: !int@l | n: int n, res: ptr l): void =
-      if n > 0
-        then
-          let val () = !res := n * !res in loop (pf | n-1, res)
-        end
-    var res: int with pf = 1
-    val () = loop (pf | n, addr@res)
-  in
-    res
-  end
+#include "{$LIBATSCC2JS}/staloadall.hats"
 
-implement main0 (argc, argv) = {
-  val () = if (argc != 2)
-    then prerrln! ("useage: ", argv[0], " <integer >= 0>")
-    else {
-      val num     = g0string2int_int (argv[1])
-      val num     = g1ofg0 (num)
-      val err_msg = "Invalid input: expecting natural number.\n"
-      val ()      = assert_errmsg (num >= 0, err_msg)
-      val res     = factorial(num)
-      val ()      = println! ("The factorial of ", num, " is: ", res)
-    }
+staload "{$LIBATSCC2JS}/SATS/print.sats"
+staload "{$LIBATSCC2JS}/DATS/print.dats"
+
+#define ATS_MAINATSFLAG 1
+#define ATS_DYNLOADNAME "my_dynload"
+
+extern fn clear_result_field: () -> void = "mac#"
+extern fn get_input: () -> int = "mac#"
+extern fn display_result: int -> void = "mac#"
+
+extern fn ifact2:<> int -> int
+implement ifact2 x = let
+  fun loop (n:int, i:int, r:int): int =
+    if n - i > 0 then let
+      val r1 = (i+1) * r in loop (n, i+1, r1)
+    end else r
+    in
+      loop (x, 0, 1)
+    end
+
+extern fn run_ifact (): void = "mac#"
+implement run_ifact () = {
+  val input = get_input ();
+  val input = g1ofg0 (input)
+  val () = assert_errmsg (input >= 0, "Bad input value.")
+  val () = display_result (ifact2(input))
 }
+
+val () = run_ifact ()
+
+%{$
+$("#factorial-form").submit(function(e){
+    e.preventDefault();
+});
+
+function get_input(){
+    return $("#natural").val(); 
+}
+
+function display_result(result){
+  var field = $("#natural").parsley();
+  if (field.isValid())
+    $("#factorial-result").val(result);
+}
+%} // end of [%{$]

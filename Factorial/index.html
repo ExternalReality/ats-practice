@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<html>
+  <head>
+    <script language="javascript" src="/home/externalreality/dev/ATS-Postiats-contrib/contrib/libatscc/libatscc2js/CATS/basics_cats.js"></script>
+    <script language="javascript" src="/home/externalreality/dev/ATS-Postiats-contrib/contrib/libatscc/libatscc2js/CATS/integer_cats.js"></script>
+    <script language="javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.1.2/parsley.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"/>
+  </head>
+  <body>
+    <h4>Calculate A Factorial</h4>
+    <form id="factorial-form">
+      <div class="row">
+        <div class="two columns">
+          <label for="natural">Enter A Number</label>
+          <input id="natural"
+                 class="u-full-width"
+                 placeholder="Number"
+                 type="number"
+                 min="0"
+                 max="30"
+                 required/>
+        </div>
+
+        <div class="two columns u-full-width">
+          <label for="factorial">Result</label>
+          <input id="factorial-result"
+                 class="u-full-width"
+                 placeholder="Result"
+                 type="text"
+                 readonly/>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="two columns">
+            <input class="button-primary u-full-width"
+                   type="submit"
+                   onclick="run_ifact()"
+                   style="text-align:center"
+                   value="Calculate">
+          </div>
+      </div>
+    </form>
+  </body>
+  <script language="javascript" src="file:///home/externalreality/dev/ats-practice/Factorial/factorial-compiled.js"></script>
+</html>
