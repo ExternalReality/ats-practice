@@ -16,21 +16,23 @@ extern fun json_value_free: {l:addr} ptr(l) -> void = "mac#json_value_free"
 extern fun json_array_get_count: {l:addr} ptr(l) -> size_t = "mac#json_array_get_count"
 extern fun json_object_get_array: {l:addr} (ptr(l), string) -> [l:addr] ptr(l) = "mac#json_object_get_array"
 
+macrodef one_plus_one = `(1)
+
 extern fn convert_json_to_etags: {l:addr} (ptr l) -> void
 implement convert_json_to_etags (taggen_array) =
   let fun loop {n : nat} .<n>. (i: int(n)) : void =
     if (i > 0)
       then let
         val tag_object = json_array_get_object(taggen_array, i2sz(i))
-        val name = json_object_get_string(tag_object, "name")
-        val line = g0float2int_double_int (json_object_get_number(tag_object, "nline"))
-        val column = g0float2int_double_int (json_object_get_number(tag_object, "nchar"))
-        val () = println! (name, " ", line, " ", column)
+        val name = json_object_get_string (tag_object, "name")
+        val line = g0float2int_double_int (json_object_get_number( tag_object, "nline"))
+        val column = g0float2int_double_int (json_object_get_number (tag_object, "nchar"))
+        val () = println! (name, "(\x7f", line, ",", column)
       in
         loop (i - 1)
       end
-    val count = json_array_get_count(taggen_array)
-    val count = sz2i(g1ofg0 count)
+    val count = json_array_get_count (taggen_array)
+    val count = sz2i (g1ofg0 count)
   in
     loop (count)
   end
