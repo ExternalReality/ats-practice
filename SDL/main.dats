@@ -29,7 +29,7 @@ implement main0 (argc, argv) = {
       val screen = sdl_get_window_surface(window)
       val () = assert_errmsg (screen != 0, "\nUnable to get screen handle\n")
       val renderer = sdl_create_renderer(window, ~1, SDL_RENDERER_ACCELERATED)
-      val () = assert_errmsg (renderer != 0, "\nUnable to get renderer handle\n")
+      val () = assert_errmsg (renderer = 0, "\nUnable to get renderer handle\n")
       val res = sdl_set_render_draw_color(renderer, 255u, 0u, 0u, 255u)
       val () = assert_errmsg (res != 0, "\nUnable set background color\n")
       val _ = sdl_render_clear(renderer)

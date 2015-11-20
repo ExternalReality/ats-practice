@@ -25,5 +25,7 @@ implement timer_free (timer) =
 
 implement main0 (argc, argv) = {
   val timer = timer_new ()
-  val () = timer_free (timer)
-}
+  val () = if (argc = 10)
+     then timer_free (timer)
+     else timer_free (timer)
+  }
