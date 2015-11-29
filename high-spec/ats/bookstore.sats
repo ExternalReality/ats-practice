@@ -11,7 +11,7 @@ datatype customer(customer) =
   | vip (vip)
   | regular (regular)
 
-dataprop CUSTOMER_GETS_DISCOUNT (customer, int, bool) =
+dataprop CUSTOMER_GETS_DISCOUNT(customer, int, bool) =
   | {i:int | GT_BOOK_THRESHOLD i}  VIP_ENOUGH_BOOKS     (vip, i, true)
   | {i:int | LTE_BOOK_THRESHOLD i} VIP_NOT_ENOUGH_BOOKS (vip, i, false)
   | {i:int}                        REGULAR              (regular, i, false)

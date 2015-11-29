@@ -7,10 +7,10 @@ license:             BSD3
 license-file:        LICENSE
 author:              Author name here
 maintainer:          example@example.com
-copyright:           2010 Author Here
+copyright:           2015 Stackbuilder LLC
 category:            Web
 build-type:          Simple
--- extra-source-files:
+extra-source-files:  ats/bookstore.h
 cabal-version:       >=1.10
 
 library
@@ -21,8 +21,10 @@ library
                      , servant-server
                      , network
                      , aeson
-                     , time                     
+                     , time
   default-language:    Haskell2010
+  extra-lib-dirs:      .
+  extra-libraries:     bookstore
 
 executable high-spec-exe
   hs-source-dirs:      app
@@ -30,8 +32,12 @@ executable high-spec-exe
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   build-depends:       base
                      , high-spec
+                     , servant-server
+                     , warp
                      , wai
   default-language:    Haskell2010
+  extra-lib-dirs:      ./ats
+  extra-libraries:     bookstore
 
 test-suite high-spec-test
   type:                exitcode-stdio-1.0
@@ -39,8 +45,11 @@ test-suite high-spec-test
   main-is:             Spec.hs
   build-depends:       base
                      , high-spec
+                     , servant-server
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
+  extra-lib-dirs:      ./ats
+  extra-libraries:     bookstore
 
 source-repository head
   type:     git

@@ -1,11 +1,14 @@
 #include "share/atspre_staload.hats"
+
 staload "bookstore.sats"
 
-extern fn should_get_free_delivery:
+#define ATS_MAINATSFLAG 1
+
+extern fn should_get_discount:
   {c: customer}{i: int} (customer c, int i) ->
   [b:bool] (CUSTOMER_GETS_DISCOUNT(c,i,b) | bool b)
 
-implement should_get_free_delivery(c,i) =
+implement should_get_discount(c,i) =
    case (c, i) of
    | (regular (), _) => (REGULAR | false)
    | (vip(), i)      => if GT_BOOK_THRESHOLD i
@@ -28,7 +31,7 @@ implement calculate_discount (userid, bookCount) =
   let
     val c = customer_type userid
     val count = g1ofg0 (bookCount)
-    val (pf | gets_discount) = should_get_free_delivery (c, count)
+    val (pf | gets_discount) = should_get_discount (c, count)
   in
     if gets_discount
       then let
@@ -38,5 +41,3 @@ implement calculate_discount (userid, bookCount) =
            end
       else 0
   end
-
-implement main0(argc, argv) = ()

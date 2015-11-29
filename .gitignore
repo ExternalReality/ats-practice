@@ -2,3 +2,6 @@
 *.o
 *.out
 !*parson.c
+*.so
+.stack-work
+  

@@ -5,6 +5,7 @@
 {-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 
+-- leave exports public so that they are easy to play with in GHCI
 module Lib where
 
 import           Foreign.C
