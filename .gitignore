@@ -3,5 +3,5 @@
 *.out
 !*parson.c
 *.so
-.stack-work
+high-spec/.stack-work
   
