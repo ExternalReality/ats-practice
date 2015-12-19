@@ -10,20 +10,21 @@ module Lib where
 
 import           Foreign.C
 import           Servant
+import           Language.Haskell.Liquid.Prelude
 
 foreign import ccall unsafe calculate_discount :: CInt -> CInt -> CInt
 
-calculateDiscount :: Integer -> Integer -> Integer
+calculateDiscount :: Int -> Int -> Int
 calculateDiscount userId bookCount =
   fromIntegral $ calculate_discount (fromIntegral userId)
                                     (fromIntegral bookCount)
 
-type BookStoreAPI = "user" :> Capture "userid" Integer
+type BookStoreAPI = "user" :> Capture "userid" Int
                            :> "discount"
-                           :> Capture "book-count" Integer
-                           :> Get '[JSON] Integer
+                           :> Capture "book-count" Int
+                           :> Get '[JSON] Int
 
-handleCalculateDiscount :: Monad m => Integer -> Integer -> m Integer
+handleCalculateDiscount :: Monad m => Int -> Int -> m Int
 handleCalculateDiscount id bookCount = return $ calculateDiscount id bookCount
 
 bookStoreAPI :: Proxy BookStoreAPI

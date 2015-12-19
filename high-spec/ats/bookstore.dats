@@ -5,7 +5,7 @@ staload "bookstore.sats"
 #define ATS_MAINATSFLAG 1
 
 extern fn should_get_discount:
-  {c: customer}{i: int} (customer c, int i) ->
+  {c: customer}{i: nat} (customer c, int i) ->
   [b:bool] (CUSTOMER_GETS_DISCOUNT(c,i,b) | bool b)
 
 implement should_get_discount(c,i) =
@@ -19,7 +19,7 @@ extern fn customer_type: int -> [c:customer] customer(c)
 implement customer_type _ = vip ()
 
 extern fn calculate_discount':
-  {c: customer}{i:int}
+  {c: customer}{i:nat | i > BOOK_THRESHOLD}
   (CUSTOMER_GETS_DISCOUNT(c,i,true) | int(i)) ->
   discount(i)
 
